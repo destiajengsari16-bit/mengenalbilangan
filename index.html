@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Matematika MI - Membilang 1-10</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            850: '#064e3b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Running Text Banner Animation */
+        @keyframes marquee {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 22s linear infinite;
+        }
+        .animate-marquee:hover, .animate-marquee:active {
+            animation-play-state: paused;
+        }
+
+        /* Card and Interactive Button Animations */
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-bounce-slow {
+            animation: bounce-slow 2.5s infinite ease-in-out;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.85); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop {
+            animation: pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            20% { transform: rotate(-8deg); }
+            40% { transform: rotate(8deg); }
+            60% { transform: rotate(-5deg); }
+            80% { transform: rotate(5deg); }
+        }
+        .animate-shake {
+            animation: shake 1.2s infinite;
+        }
+
+        /* Custom Theme Buttons */
+        .btn-green {
+            background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+            transition: all 0.2s ease;
+        }
+        .btn-green:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(245, 158, 11, 0.39);
+            transition: all 0.2s ease;
+        }
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(245, 158, 11, 0.5);
+        }
+
+        /* Slider Control Styling */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 28px;
+            width: 28px;
+            border-radius: 50%;
+            background: #d97706;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            border: 3px solid #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen text-slate-800 flex flex-col items-center justify-start p-0 m-0 overflow-x-hidden select-none">
+
+    <div id="splash-screen" class="fixed inset-0 z-50 bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 flex flex-col items-center justify-center p-6 text-center">
+        <div class="animate-pop flex flex-col items-center max-w-sm w-full bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-amber-300/30 shadow-2xl">
+            <div class="text-7xl mb-4 animate-bounce-slow">🌽</div>
+            <h1 class="text-2xl md:text-3xl font-black text-amber-300 mb-1 leading-tight">MATEMATIKA MI</h1>
+            <p class="text-emerald-100 font-bold text-sm mb-1">Fase A / Kelas I - MI Tolangohula</p>
+            <p class="text-xs text-emerald-200/80 mb-6 italic">Kanwil Kementerian Agama Provinsi Gorontalo</p>
+            
+            <div class="w-full bg-emerald-950/60 rounded-full h-3 mb-6 p-0.5 border border-emerald-500/40">
+                <div id="splash-bar" class="bg-gradient-to-r from-amber-400 to-yellow-300 h-2 rounded-full w-0 transition-all duration-300"></div>
+            </div>
+
+            <button onclick="startApp()" id="btn-enter-app" class="w-full btn-gold py-3.5 px-6 rounded-2xl font-black text-base shadow-lg hidden animate-pop flex items-center justify-center gap-2">
+                <span>🚀</span> Buka Media Pembelajaran
+            </button>
+        </div>
+    </div>
+
+    <div class="w-full bg-emerald-950 text-amber-300 text-xs md:text-sm font-bold py-2 px-4 overflow-hidden border-b border-emerald-700/50 shadow-inner">
+        <div class="animate-marquee cursor-pointer">
+            ✨ Selamat Datang di Media Pembelajaran Matematika MI Tolangohula | Capaian Pembelajaran Fase A: Membilang dan Menulis Angka 1-10 | Semangat Belajar Anak Sholeh & Sholehah! ✨
+        </div>
+    </div>
+
+    <header class="w-full bg-emerald-800 text-white shadow-md border-b-4 border-amber-400 py-3 px-4 md:px-8 flex items-center justify-between sticky top-0 z-40">
+        <div class="flex items-center gap-3">
+            <span class="text-3xl">🌽</span>
+            <div>
+                <h1 class="font-black text-base md:text-xl text-amber-200 leading-tight">Membilang Angka 1 - 10</h1>
+                <p class="text-[10px] md:text-xs text-emerald-100 font-semibold">MI Tolangohula - Kab. Gorontalo</p>
+            </div>
+        </div>
+        <button onclick="goToCover()" class="bg-emerald-700 hover:bg-emerald-600 border border-emerald-500 text-amber-200 px-3 py-1.5 rounded-xl font-bold text-xs md:text-sm flex items-center gap-1.5 shadow transition-all">
+            <span>🏠</span> Beranda
+        </button>
+    </header>
+
+    <div class="w-full max-w-4xl px-3 py-4 md:py-6 flex-grow">
+
+        <main id="cover-page" class="bg-gradient-to-b from-emerald-800 to-emerald-900 rounded-3xl p-6 md:p-8 text-white shadow-2xl border-4 border-amber-300/40 space-y-6 animate-pop">
+            <div class="text-center space-y-2">
+                <div class="inline-block bg-amber-400 text-emerald-950 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider mb-1 shadow">
+                    Media Pembelajaran Interaktif
+                </div>
+                <h2 class="text-2xl md:text-4xl font-black text-amber-300 drop-shadow">Membilang & Menulis Bilangan 1-10</h2>
+                <p class="text-emerald-100 font-medium text-xs md:text-base max-w-xl mx-auto">
+                    Modul eksplorasi visual interaktif berbantuan benda konkret kontekstual (Panen Jagung Tolangohula) untuk murid Fase A.
+                </p>
+            </div>
+
+            <div class="flex justify-center pt-2">
+                <button onclick="startLearning()" class="btn-gold py-4 px-8 rounded-2xl font-black text-lg md:text-xl shadow-xl flex items-center gap-3 animate-bounce-slow">
+                    <span>🚀</span> Mulai Eksplorasi Belajar
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 w-full pt-4">
+                <button onclick="openInfoModal('tp')" class="bg-white/10 hover:bg-white/20 border border-emerald-400/30 p-4 rounded-2xl flex flex-col items-center text-center transition-all">
+                    <span class="text-3xl mb-2">🎯</span>
+                    <span class="font-extrabold text-xs md:text-sm text-amber-200">Tujuan Belajar</span>
+                </button>
+                <button onclick="openInfoModal('pengembangan')" class="bg-white/10 hover:bg-white/20 border border-emerald-400/30 p-4 rounded-2xl flex flex-col items-center text-center transition-all">
+                    <span class="text-3xl mb-2">ℹ️</span>
+                    <span class="font-extrabold text-xs md:text-sm text-amber-200">Info Media</span>
+                </button>
+                <button onclick="openInfoModal('pengembang')" class="bg-white/10 hover:bg-white/20 border border-emerald-400/30 p-4 rounded-2xl flex flex-col items-center text-center transition-all">
+                    <span class="text-3xl mb-2">👤</span>
+                    <span class="font-extrabold text-xs md:text-sm text-amber-200">Pengembang</span>
+                </button>
+                <button onclick="openInfoModal('referensi')" class="bg-white/10 hover:bg-white/20 border border-emerald-400/30 p-4 rounded-2xl flex flex-col items-center text-center transition-all">
+                    <span class="text-3xl mb-2">📚</span>
+                    <span class="font-extrabold text-xs md:text-sm text-amber-200">Referensi</span>
+                </button>
+            </div>
+
+            <!-- Config Google Apps Script Shortcut -->
+            <button onclick="openInfoModal('spreadsheet')" class="w-full bg-amber-400/20 hover:bg-amber-400/30 border border-amber-300/50 p-3.5 rounded-2xl flex items-center justify-center gap-2 text-amber-200 font-extrabold text-xs md:text-sm shadow-md transition-all">
+                <span>📊</span>
+                <span>Atur Database Google Apps Script Guru</span>
+                <span class="bg-amber-400 text-emerald-950 text-[10px] px-2 py-0.5 rounded-full font-black">Fitur Guru</span>
+            </button>
+        </main>
+
+        <div id="learning-container" class="hidden space-y-6">
+            
+            <div class="flex bg-emerald-800/20 p-1.5 rounded-2xl gap-1 border border-emerald-200">
+                <button onclick="switchTab('explorasi')" id="tab-explorasi" class="flex-1 py-2.5 px-3 rounded-xl font-black text-xs md:text-sm transition-all bg-emerald-700 text-white shadow">
+                    🌽 1. Membilang Jagung
+                </button>
+                <button onclick="switchTab('menulis')" id="tab-menulis" class="flex-1 py-2.5 px-3 rounded-xl font-black text-xs md:text-sm transition-all text-emerald-900 hover:bg-white/50">
+                    ✍️ 2. Kartu Angka
+                </button>
+                <button onclick="switchTab('kuis')" id="tab-kuis" class="flex-1 py-2.5 px-3 rounded-xl font-black text-xs md:text-sm transition-all text-emerald-900 hover:bg-white/50">
+                    🧩 3. Kuis Menjodohkan
+                </button>
+            </div>
+
+            <section id="sec-explorasi" class="bg-white rounded-3xl p-5 md:p-8 shadow-xl border-2 border-emerald-100 space-y-6 animate-pop">
+                <div class="text-center space-y-1">
+                    <h3 class="text-xl md:text-2xl font-black text-emerald-800">Mari Membilang Jagung Hasil Panen!</h3>
+                    <p class="text-xs md:text-sm text-slate-600 font-semibold">Geser slider di bawah untuk menambah atau mengurangi jumlah jagung.</p>
+                </div>
+
+                <div class="bg-gradient-to-br from-amber-50 to-emerald-50 border-4 border-amber-300 rounded-3xl p-6 text-center space-y-4 shadow-inner">
+                    <div id="corn-display" class="flex flex-wrap items-center justify-center gap-3 min-h-[110px] p-2"></div>
+
+                    <div class="flex items-center justify-center gap-4 bg-white/80 py-3 px-6 rounded-2xl border border-emerald-200 max-w-xs mx-auto shadow-sm">
+                        <span id="digit-display" class="text-5xl font-black text-emerald-700">1</span>
+                        <div class="text-left">
+                            <p id="word-display" class="text-xl font-black text-amber-600 uppercase">SATU</p>
+                            <p class="text-[11px] text-slate-500 font-bold">Tongkol Jagung</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 max-w-md mx-auto pt-2">
+                    <div class="flex items-center justify-between text-xs font-black text-emerald-800 px-1">
+                        <span>Angka: 1</span>
+                        <span id="slider-val-text" class="text-amber-600 text-base">1</span>
+                        <span>Angka: 10</span>
+                    </div>
+                    <input type="range" id="corn-slider" min="1" max="10" value="1" oninput="updateCornSlider(this.value)" class="w-full h-3 bg-emerald-200 rounded-lg appearance-none cursor-pointer border border-emerald-300">
+                    
+                    <div class="flex justify-between items-center gap-3 pt-2">
+                        <button onclick="adjustSlider(-1)" class="flex-1 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 py-2.5 rounded-xl font-extrabold text-sm border border-emerald-300">
+                            ➖ Kurangi
+                        </button>
+                        <button onclick="playAudio('read')" class="bg-amber-400 hover:bg-amber-500 text-emerald-950 px-4 py-2.5 rounded-xl font-black text-sm shadow flex items-center gap-1.5">
+                            🔊 Bunyi
+                        </button>
+                        <button onclick="adjustSlider(1)" class="flex-1 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 py-2.5 rounded-xl font-extrabold text-sm border border-emerald-300">
+                            ➕ Tambah
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="sec-menulis" class="hidden bg-white rounded-3xl p-5 md:p-8 shadow-xl border-2 border-emerald-100 space-y-6 animate-pop">
+                <div class="text-center space-y-1">
+                    <h3 class="text-xl md:text-2xl font-black text-emerald-800">Mengenal & Mengingat Angka 1-10</h3>
+                    <p class="text-xs md:text-sm text-slate-600 font-semibold">Ketuk salah satu kartu angka di bawah untuk melihat detailnya!</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 md:gap-4">
+                    <script>
+                        for(let i=1; i<=10; i++){
+                            document.write(`
+                                <button onclick="selectNumberCard(${i})" id="card-${i}" class="bg-gradient-to-br from-emerald-50 to-amber-50 hover:from-amber-100 hover:to-emerald-100 border-2 border-emerald-300 rounded-2xl p-4 flex flex-col items-center justify-center transition-all shadow-sm hover:shadow-md">
+                                    <span class="text-4xl font-black text-emerald-700">${i}</span>
+                                </button>
+                            `);
+                        }
+                    </script>
+                </div>
+
+                <div id="card-detail-box" class="bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-5 text-center space-y-2">
+                    <p class="text-xs font-bold text-slate-500">Petunjuk:</p>
+                    <p class="text-sm md:text-base font-extrabold text-emerald-800">Ketuk salah satu kotak angka di atas untuk mulai melihat nama dan jumlah objeknya!</p>
+                </div>
+            </section>
+
+            <section id="sec-kuis" class="hidden bg-white rounded-3xl p-5 md:p-8 shadow-xl border-2 border-emerald-100 space-y-6 animate-pop">
+                <div class="text-center space-y-1">
+                    <h3 class="text-xl md:text-2xl font-black text-emerald-800">Kuis Menjodohkan Angka</h3>
+                    <p class="text-xs md:text-sm text-slate-600 font-semibold">Pilih satu kartu di Kiri, lalu pasangkan dengan angka yang cocok di Kanan!</p>
+                </div>
+
+                <!-- Input Identitas Siswa Sebelum Kuis -->
+                <div class="bg-emerald-50/80 border-2 border-emerald-200 rounded-2xl p-4 space-y-3">
+                    <h4 class="font-extrabold text-xs md:text-sm text-emerald-900 flex items-center gap-2">
+                        <span>📝</span> Data Diri Siswa
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-600 mb-1">Nama Lengkap Siswa:</label>
+                            <input type="text" id="student-name" placeholder="Tuliskan nama siswa di sini..." class="w-full px-3.5 py-2 rounded-xl border border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-bold text-xs bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-600 mb-1">Kelas / Unit Madrasah:</label>
+                            <input type="text" id="student-class" value="Kelas I - MI Tolangohula" class="w-full px-3.5 py-2 rounded-xl border border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-bold text-xs bg-white">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 flex items-center justify-between text-xs md:text-sm font-black text-amber-900">
+                    <span>Skor Kamu: <span id="quiz-score" class="text-emerald-700 text-lg">0</span></span>
+                    <span>Progres: <span id="quiz-progress">0</span> / 5 Terjawab</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-3">
+                        <h4 class="font-extrabold text-xs text-slate-500 uppercase tracking-wider text-center">Kolom A (Benda / Nama)</h4>
+                        <div id="left-column" class="space-y-2.5"></div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h4 class="font-extrabold text-xs text-slate-500 uppercase tracking-wider text-center">Kolom B (Simbol Angka)</h4>
+                        <div id="right-column" class="grid grid-cols-2 gap-2.5"></div>
+                    </div>
+                </div>
+
+                <div id="match-feedback" class="hidden p-4 rounded-2xl border text-center font-extrabold text-sm animate-pop"></div>
+
+                <div id="result-area" class="hidden text-center py-6 animate-pop space-y-6">
+                    <div class="space-y-2">
+                        <h2 class="text-3xl font-black text-emerald-800">Masya Allah! 🎉</h2>
+                        <p class="text-sm font-semibold text-slate-600">Kamu telah menyelesaikan latihan menjodohkan!</p>
+                    </div>
+
+                    <div class="inline-block bg-gradient-to-br from-emerald-100 to-amber-50 border-4 border-amber-400 rounded-3xl p-6 shadow-lg relative">
+                        <p class="text-sm font-extrabold text-emerald-800 mb-1">Nilai Akhir Kamu</p>
+                        <div id="final-score" class="text-7xl font-black text-emerald-600">100</div>
+                    </div>
+
+                    <!-- Surprise Gift Box -->
+                    <div id="surprise-container" class="p-6 bg-gradient-to-b from-amber-50 to-orange-100 border-2 border-amber-300 rounded-3xl text-center space-y-3 max-w-md mx-auto shadow-inner">
+                        <h4 class="font-extrabold text-amber-900 text-sm">🎁 Ada Kotak Kejutan untuk Kamu!</h4>
+                        <button onclick="openSurpriseBox()" id="btn-surprise" class="text-6xl animate-shake hover:scale-110 transition-transform cursor-pointer p-2 inline-block">
+                            🎁
+                        </button>
+                        <p id="surprise-text" class="text-xs font-bold text-amber-800">Ketuk kotak kado di atas untuk membuka hadiah bonus!</p>
+                    </div>
+
+                    <!-- Google Sheet Submission Card -->
+                    <div class="max-w-md mx-auto bg-emerald-50 border-2 border-emerald-300 rounded-3xl p-5 text-left space-y-3 shadow-md">
+                        <h3 class="font-black text-emerald-900 text-base flex items-center gap-2">
+                            <span>📤</span> Simpan Nilai ke Database Guru
+                        </h3>
+                        <p class="text-xs text-slate-600 font-semibold">
+                            Data pengerjaan lengkap (waktu, jawaban benar, salah, dan riwayat pilihan) akan dikirim otomatis ke Google Sheet.
+                        </p>
+                        <button onclick="submitScoreToSheet()" id="btn-submit-sheet" class="w-full btn-green py-3 rounded-xl font-black text-xs md:text-sm flex items-center justify-center gap-2 shadow">
+                            <span>🚀</span> Kirim Nilai ke Database Sheet Guru
+                        </button>
+                        <div id="sheet-status" class="hidden text-center text-xs font-bold p-2.5 rounded-xl border"></div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <div id="info-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border-4 border-amber-300 relative animate-pop space-y-4 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeInfoModal()" class="absolute top-4 right-4 bg-slate-100 hover:bg-slate-200 text-slate-700 w-8 h-8 rounded-full font-black text-sm flex items-center justify-center">
+                ✕
+            </button>
+            <div id="modal-content-area"></div>
+        </div>
+    </div>
+
+    <footer class="p-4 text-center text-slate-500 text-xs font-semibold">
+        Media Pembelajaran Matematika MI © Kanwil Kemenag Provinsi Gorontalo
+    </footer>
+
+    <script>
+        const numberWords = ["Nol", "SATU", "DUA", "TIGA", "EMPAT", "LIMA", "ENAM", "TUJUH", "DELAPAN", "SEMBILAN", "SEPULUH"];
+        let googleSheetUrl = localStorage.getItem('gas_web_app_url') || "https://script.google.com/macros/s/AKfycbwUbr7xThYtyrpLDmTtzGXXq0u0BOmN3nbeflWLS8K-LsZmFKlSUH8MoaLk4ofCpCDq/exec";
+        let audioCtx = null;
+
+        // Sound Effects Synthesizer
+        function playAudio(type) {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                    osc.start(now);
+                    osc.stop(now + 0.1);
+                } else if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.1);
+                    osc.frequency.setValueAtTime(783.99, now + 0.2);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.setValueAtTime(180, now + 0.15);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'fanfare') {
+                    const freqs = [523.25, 659.25, 783.99, 1046.50];
+                    freqs.forEach((f, i) => {
+                        const o = audioCtx.createOscillator();
+                        const g = audioCtx.createGain();
+                        o.connect(g);
+                        g.connect(audioCtx.destination);
+                        o.frequency.setValueAtTime(f, now + (i * 0.1));
+                        g.gain.setValueAtTime(0.15, now + (i * 0.1));
+                        g.gain.exponentialRampToValueAtTime(0.01, now + (i * 0.1) + 0.25);
+                        o.start(now + (i * 0.1));
+                        o.stop(now + (i * 0.1) + 0.25);
+                    });
+                } else if (type === 'read') {
+                    const currentVal = parseInt(document.getElementById('corn-slider').value) || 1;
+                    const utterance = new SpeechSynthesisUtterance(numberWords[currentVal]);
+                    utterance.lang = 'id-ID';
+                    utterance.rate = 0.85;
+                    window.speechSynthesis.speak(utterance);
+                }
+            } catch (e) {
+                console.log("Audio non-active", e);
+            }
+        }
+
+        window.onload = function() {
+            let progress = 0;
+            const bar = document.getElementById('splash-bar');
+            const btn = document.getElementById('btn-enter-app');
+            
+            const timer = setInterval(() => {
+                progress += 25;
+                if(bar) bar.style.width = progress + '%';
+                if(progress >= 100) {
+                    clearInterval(timer);
+                    if(btn) btn.classList.remove('hidden');
+                }
+            }, 180);
+
+            renderCornDisplay(1);
+            initMatchingGame();
+        };
+
+        function startApp() {
+            playAudio('click');
+            const splash = document.getElementById('splash-screen');
+            if(splash) splash.classList.add('hidden');
+        }
+
+        function goToCover() {
+            playAudio('click');
+            document.getElementById('cover-page').classList.remove('hidden');
+            document.getElementById('learning-container').classList.add('hidden');
+        }
+
+        function startLearning() {
+            playAudio('click');
+            document.getElementById('cover-page').classList.add('hidden');
+            document.getElementById('learning-container').classList.remove('hidden');
+            switchTab('explorasi');
+        }
+
+        function switchTab(tabName) {
+            playAudio('click');
+            ['explorasi', 'menulis', 'kuis'].forEach(t => {
+                const sec = document.getElementById('sec-' + t);
+                const btn = document.getElementById('tab-' + t);
+                if(sec && btn) {
+                    if(t === tabName) {
+                        sec.classList.remove('hidden');
+                        btn.className = "flex-1 py-2.5 px-3 rounded-xl font-black text-xs md:text-sm transition-all bg-emerald-700 text-white shadow";
+                    } else {
+                        sec.classList.add('hidden');
+                        btn.className = "flex-1 py-2.5 px-3 rounded-xl font-black text-xs md:text-sm transition-all text-emerald-900 hover:bg-white/50";
+                    }
+                }
+            });
+        }
+
+        function getCornSVG() {
+            return `<svg class="w-10 h-10 md:w-12 md:h-12 animate-pop" viewBox="0 0 64 64" fill="none">
+                <path d="M32 8C24 8 18 16 18 32C18 48 26 56 32 58C38 56 46 48 46 32C46 16 40 8 32 8Z" fill="#F59E0B"/>
+                <path d="M22 20C22 20 28 22 32 22C36 22 42 20 42 20" stroke="#D97706" stroke-width="2" stroke-linecap="round"/>
+                <path d="M20 30C20 30 27 32 32 32C37 32 44 30 44 30" stroke="#D97706" stroke-width="2" stroke-linecap="round"/>
+                <path d="M22 40C22 40 28 42 32 42C36 42 42 40 42 40" stroke="#D97706" stroke-width="2" stroke-linecap="round"/>
+                <path d="M16 44C16 44 22 48 32 54C42 48 48 44 48 44C44 56 32 60 32 60C32 60 20 56 16 44Z" fill="#10B981"/>
+            </svg>`;
+        }
+
+        function renderCornDisplay(num) {
+            const container = document.getElementById('corn-display');
+            if(!container) return;
+            container.innerHTML = '';
+            for(let i=0; i<num; i++) {
+                container.innerHTML += getCornSVG();
+            }
+            document.getElementById('digit-display').innerText = num;
+            document.getElementById('word-display').innerText = numberWords[num];
+            document.getElementById('slider-val-text').innerText = num;
+        }
+
+        function updateCornSlider(val) {
+            renderCornDisplay(parseInt(val));
+        }
+
+        function adjustSlider(delta) {
+            playAudio('click');
+            const slider = document.getElementById('corn-slider');
+            let current = parseInt(slider.value) || 1;
+            let next = Math.max(1, Math.min(10, current + delta));
+            slider.value = next;
+            renderCornDisplay(next);
+        }
+
+        function selectNumberCard(num) {
+            playAudio('click');
+            const detailBox = document.getElementById('card-detail-box');
+            if(detailBox) {
+                let cornHTML = '';
+                for(let i=0; i<num; i++) { cornHTML += '🌽 '; }
+                detailBox.innerHTML = `
+                    <p class="text-xs font-black text-amber-600 uppercase">Detail Bilangan</p>
+                    <h4 class="text-3xl font-black text-emerald-800">${num} - ${numberWords[num]}</h4>
+                    <p class="text-xl my-1">${cornHTML}</p>
+                    <p class="text-xs font-semibold text-slate-600">Simbol angka ${num} mewakili ${num} buah objek jagung secara konkrit.</p>
+                `;
+            }
+        }
+
+        const quizItems = [
+            { id: 1, text: "🌽 (1 Jagung)", num: 1 },
+            { id: 2, text: "🌽🌽 (2 Jagung)", num: 2 },
+            { id: 3, text: "Kata: 'TIGA'", num: 3 },
+            { id: 4, text: "🌽🌽🌽🌽 (4 Jagung)", num: 4 },
+            { id: 5, text: "Kata: 'LIMA'", num: 5 }
+        ];
+
+        let selectedLeft = null;
+        let selectedRight = null;
+        let score = 0;
+        let matchedCount = 0;
+        let wrongAttemptsCount = 0;
+        let userDetailedLog = [];
+
+        function initMatchingGame() {
+            score = 0;
+            matchedCount = 0;
+            wrongAttemptsCount = 0;
+            selectedLeft = null;
+            selectedRight = null;
+            userDetailedLog = [];
+
+            const leftCol = document.getElementById('left-column');
+            const rightCol = document.getElementById('right-column');
+            if(!leftCol || !rightCol) return;
+
+            leftCol.innerHTML = '';
+            rightCol.innerHTML = '';
+
+            quizItems.forEach((item, index) => {
+                leftCol.innerHTML += `
+                    <button onclick="selectLeft(${index}, ${item.num})" id="left-btn-${index}" class="w-full text-left p-3.5 bg-slate-50 hover:bg-amber-50 border-2 border-slate-200 rounded-2xl font-bold text-xs md:text-sm text-slate-700 transition-all shadow-sm">
+                        ${item.text}
+                    </button>
+                `;
+            });
+
+            const numbers = [1, 2, 3, 4, 5].sort(() => Math.random() - 0.5);
+            numbers.forEach((n) => {
+                rightCol.innerHTML += `
+                    <button onclick="selectRight(${n})" id="right-btn-${n}" class="p-3.5 bg-slate-50 hover:bg-emerald-50 border-2 border-slate-200 rounded-2xl font-black text-base text-center text-emerald-800 transition-all shadow-sm">
+                        Angka ${n}
+                    </button>
+                `;
+            });
+        }
+
+        function selectLeft(index, targetNum) {
+            playAudio('click');
+            selectedLeft = { index, targetNum, text: quizItems[index].text };
+            
+            quizItems.forEach((_, i) => {
+                const btn = document.getElementById(`left-btn-${i}`);
+                if(btn && !btn.disabled) {
+                    btn.className = (i === index) 
+                        ? "w-full text-left p-3.5 bg-amber-100 border-2 border-amber-400 rounded-2xl font-bold text-xs md:text-sm text-amber-900 shadow-md"
+                        : "w-full text-left p-3.5 bg-slate-50 hover:bg-amber-50 border-2 border-slate-200 rounded-2xl font-bold text-xs md:text-sm text-slate-700 transition-all shadow-sm";
+                }
+            });
+            checkMatch();
+        }
+
+        function selectRight(num) {
+            playAudio('click');
+            selectedRight = num;
+
+            [1, 2, 3, 4, 5].forEach((n) => {
+                const btn = document.getElementById(`right-btn-${n}`);
+                if(btn && !btn.disabled) {
+                    btn.className = (n === num)
+                        ? "p-3.5 bg-emerald-100 border-2 border-emerald-500 rounded-2xl font-black text-base text-center text-emerald-900 shadow-md"
+                        : "p-3.5 bg-slate-50 hover:bg-emerald-50 border-2 border-slate-200 rounded-2xl font-black text-base text-center text-emerald-800 transition-all shadow-sm";
+                }
+            });
+            checkMatch();
+        }
+
+        function checkMatch() {
+            if(selectedLeft !== null && selectedRight !== null) {
+                const feedback = document.getElementById('match-feedback');
+                feedback.classList.remove('hidden');
+
+                if(selectedLeft.targetNum === selectedRight) {
+                    playAudio('correct');
+                    score += 20;
+                    matchedCount++;
+
+                    // Merekam detail log jawaban benar siswa
+                    userDetailedLog.push(`[BENAR] ${selectedLeft.text} ➔ Angka ${selectedRight}`);
+
+                    document.getElementById('quiz-score').innerText = score;
+                    document.getElementById('quiz-progress').innerText = matchedCount;
+
+                    feedback.className = "p-4 rounded-2xl border text-center font-extrabold text-xs md:text-sm animate-pop bg-emerald-100 border-emerald-300 text-emerald-900";
+                    feedback.innerText = `✅ Tepat Sekali! ${selectedLeft.text} cocok dengan Angka ${selectedRight}.`;
+
+                    const leftBtn = document.getElementById(`left-btn-${selectedLeft.index}`);
+                    const rightBtn = document.getElementById(`right-btn-${selectedRight}`);
+                    
+                    if(leftBtn) {
+                        leftBtn.disabled = true;
+                        leftBtn.className = "w-full text-left p-3.5 bg-emerald-500 text-white border-2 border-emerald-600 rounded-2xl font-bold text-xs opacity-75 cursor-not-allowed";
+                    }
+                    if(rightBtn) {
+                        rightBtn.disabled = true;
+                        rightBtn.className = "p-3.5 bg-emerald-500 text-white border-2 border-emerald-600 rounded-2xl font-black text-base text-center opacity-75 cursor-not-allowed";
+                    }
+
+                    selectedLeft = null;
+                    selectedRight = null;
+
+                    if(matchedCount >= 5) {
+                        setTimeout(showFinalResult, 1000);
+                    }
+                } else {
+                    playAudio('wrong');
+                    wrongAttemptsCount++;
+                    
+                    // Merekam detail log jawaban salah siswa
+                    userDetailedLog.push(`[SALAH] ${selectedLeft.text} ➔ Angka ${selectedRight}`);
+
+                    feedback.className = "p-4 rounded-2xl border text-center font-extrabold text-xs md:text-sm animate-pop bg-red-100 border-red-300 text-red-900";
+                    feedback.innerText = `❌ Belum Pas! Hitung ulang kembali jumlah benda tersebut.`;
+
+                    selectedLeft = null;
+                    selectedRight = null;
+                }
+            }
+        }
+
+        function showFinalResult() {
+            playAudio('fanfare');
+            document.getElementById('result-area').classList.remove('hidden');
+            document.getElementById('final-score').innerText = score;
+        }
+
+        function openSurpriseBox() {
+            playAudio('fanfare');
+            const btn = document.getElementById('btn-surprise');
+            const text = document.getElementById('surprise-text');
+            if(btn && text) {
+                btn.innerText = '🌟';
+                score += 20;
+                document.getElementById('final-score').innerText = score;
+                text.className = "text-xs font-black text-emerald-700";
+                text.innerText = "🎉 Selamat! Kamu mendapat Bonus +20 Poin Bintang!";
+                userDetailedLog.push("[BONUS] Membuka Kotak Kejutan (+20 Poin)");
+                btn.onclick = null;
+            }
+        }
+
+        function saveGoogleSheetUrl() {
+            const input = document.getElementById('input-sheet-url');
+            if(input) {
+                googleSheetUrl = input.value.trim();
+                localStorage.setItem('gas_web_app_url', googleSheetUrl);
+                alert("✅ Link Database Google Apps Script berhasil disimpan!");
+            }
+        }
+
+        async function submitScoreToSheet() {
+            playAudio('click');
+            const nameInput = document.getElementById('student-name');
+            const classInput = document.getElementById('student-class');
+            const statusEl = document.getElementById('sheet-status');
+            const btnSubmit = document.getElementById('btn-submit-sheet');
+
+            const studentName = nameInput.value.trim();
+            const studentClass = classInput.value.trim();
+
+            if(!studentName) {
+                statusEl.classList.remove('hidden');
+                statusEl.className = "block p-2.5 rounded-xl border bg-red-100 text-red-700 border-red-300 text-xs font-bold";
+                statusEl.innerText = "⚠ Tuliskan Nama Lengkap Siswa terlebih dahulu di kolom atas!";
+                // Scroll ke kolom nama
+                nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                nameInput.focus();
+                return;
+            }
+
+            if(!googleSheetUrl) {
+                statusEl.classList.remove('hidden');
+                statusEl.className = "block p-2.5 rounded-xl border bg-amber-100 text-amber-800 border-amber-300 text-xs font-bold";
+                statusEl.innerText = "⚠️ Link Google Apps Script belum diatur Guru! Klik 'Fitur Guru' di Beranda.";
+                return;
+            }
+
+            btnSubmit.disabled = true;
+            statusEl.classList.remove('hidden');
+            statusEl.className = "block p-2.5 rounded-xl border bg-blue-100 text-blue-800 border-blue-300 text-xs font-bold animate-pulse";
+            statusEl.innerText = "⏳ Mengirim hasil evaluasi ke Database Spreadsheet...";
+
+            // Menyiapkan Data Payload
+            const payload = {
+                nama: studentName,
+                kelas: studentClass,
+                jumlahBenar: matchedCount,
+                jumlahSalah: wrongAttemptsCount,
+                skor: score,
+                detailJawaban: userDetailedLog.join(" | ")
+            };
+
+            try {
+                // Menggunakan fetch dengan Content-Type text/plain untuk bypass preflight CORS standard Apps Script
+                const response = await fetch(googleSheetUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.status === "success") {
+                    statusEl.className = "block p-2.5 rounded-xl border bg-emerald-100 text-emerald-800 border-emerald-300 text-xs font-bold";
+                    statusEl.innerText = "🎉 Alhamdulillah! Data evaluasi siswa berhasil tersimpan di Google Sheet Guru!";
+                    btnSubmit.classList.add('hidden'); // Sembunyikan tombol jika sukses agar tidak klik dua kali
+                } else {
+                    throw new Error("Respon server gagal.");
+                }
+            } catch (err) {
+                statusEl.className = "block p-2.5 rounded-xl border bg-red-100 text-red-700 border-red-300 text-xs font-bold";
+                statusEl.innerText = "❌ Gagal mengirim nilai. Pastikan link Apps Script benar dan internet stabil.";
+                btnSubmit.disabled = false;
+            }
+        }
+
+        // Modal Content Controller
+        function openInfoModal(type) {
+            playAudio('click');
+            const area = document.getElementById('modal-content-area');
+            const modal = document.getElementById('info-modal');
+            if(!area || !modal) return;
+
+            let contentHTML = '';
+
+            if(type === 'tp') {
+                contentHTML = `
+                    <div class="text-center mb-3">
+                        <span class="text-4xl">🎯</span>
+                        <h3 class="text-xl font-black text-emerald-800 mt-1">Tujuan Pembelajaran</h3>
+                        <p class="text-xs font-bold text-amber-600">Matematika Fase A / Kelas I MI</p>
+                    </div>
+                    <div class="space-y-2 text-slate-700 text-xs md:text-sm leading-relaxed">
+                        <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+                            <b>Capaian Pembelajaran (CP):</b> Peserta didik mampu membilang lambang bilangan sampai dengan 10, mengurutkan, dan menuliskan angka 1-10 secara konkret.
+                        </div>
+                        <ul class="list-disc pl-4 space-y-1 font-medium">
+                            <li>Membilang objek konkret 1 sampai 10.</li>
+                            <li>Menghubungkan simbol angka 1-10 dengan objek visual.</li>
+                            <li>Mengenal penulisan dan sebutan nama bilangan.</li>
+                        </ul>
+                    </div>
+                `;
+            } else if(type === 'spreadsheet') {
+                contentHTML = `
+                    <div class="text-center mb-3">
+                        <span class="text-4xl">📊</span>
+                        <h3 class="text-xl font-black text-emerald-800 mt-1">Database Google Apps Script</h3>
+                        <p class="text-xs font-bold text-amber-600">Integrasi Google Sheet Auto-Save</p>
+                    </div>
+                    <div class="space-y-3 text-slate-700 text-xs">
+                        <div class="bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-2">
+                            <label class="block font-bold text-amber-900">URL Web App Google Apps Script Guru:</label>
+                            <input type="text" id="input-sheet-url" placeholder="https://script.google.com/macros/s/.../exec" value="${googleSheetUrl}" class="w-full p-2 rounded-lg border border-amber-300 font-mono text-[10px] focus:outline-none bg-white">
+                            <button onclick="saveGoogleSheetUrl()" class="w-full btn-gold py-2 rounded-lg font-extrabold text-xs">💾 Simpan URL Web App</button>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
+                            <p class="font-bold text-emerald-800">💡 Petunjuk Singkat Guru:</p>
+                            <p class="text-[11px] leading-snug">
+                                1. Buka Google Sheet baru.<br>
+                                2. Klik <b>Ekstensi ➔ Apps Script</b>.<br>
+                                3. Buat file <code>code.gs</code> lalu <i>Paste</i> script backend ke dalamnya.<br>
+                                4. Lakukan <b>Deploy ➔ New Deployment ➔ Web App</b> (Access: Anyone).<br>
+                                5. Salin link Web App yang muncul ke kolom di atas.
+                            </p>
+                        </div>
+                    </div>
+                `;
+            } else if(type === 'pengembangan') {
+                contentHTML = `
+                    <div class="text-center mb-3">
+                        <span class="text-4xl">ℹ️</span>
+                        <h3 class="text-xl font-black text-emerald-800 mt-1">Info Media</h3>
+                    </div>
+                    <div class="space-y-2 text-slate-700 text-xs md:text-sm">
+                        <p>Media Pembelajaran Mandiri HTML5, CSS3, JavaScript & Web Apps Script API. Didesain untuk fleksibilitas diakses secara offline maupun online via GitHub Pages.</p>
+                    </div>
+                `;
+            } else if(type === 'pengembang') {
+                contentHTML = `
+                    <div class="text-center mb-3">
+                        <span class="text-4xl">👤</span>
+                        <h3 class="text-xl font-black text-emerald-800 mt-1">Informasi Pengembang</h3>
+                    </div>
+                    <div class="space-y-2 text-slate-700 text-xs md:text-sm text-center">
+                        <p class="font-bold">Tim Pengembang Pembelajaran Digital MI</p>
+                        <p class="text-slate-500">Kecamatan Tolangohula, Kabupaten Gorontalo</p>
+                        <p class="text-emerald-700 font-semibold">Kanwil Kementerian Agama Provinsi Gorontalo</p>
+                    </div>
+                `;
+            } else if(type === 'referensi') {
+                contentHTML = `
+                    <div class="text-center mb-3">
+                        <span class="text-4xl">📚</span>
+                        <h3 class="text-xl font-black text-emerald-800 mt-1">Referensi Curriculum</h3>
+                    </div>
+                    <ul class="list-disc pl-4 text-xs md:text-sm space-y-1 text-slate-700">
+                        <li>KMA No. 347 Tahun 2022 tentang Pedoman Kurikulum Merdeka pada Madrasah.</li>
+                        <li>Buku Teks Utama Matematika Kelas I SD/MI - Kemendikbudristek.</li>
+                    </ul>
+                `;
+            }
+
+            area.innerHTML = contentHTML;
+            modal.classList.remove('hidden');
+        }
+
+        function closeInfoModal() {
+            playAudio('click');
+            const modal = document.getElementById('info-modal');
+            if(modal) modal.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
